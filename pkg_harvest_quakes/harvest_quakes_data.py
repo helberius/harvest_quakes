@@ -5,6 +5,7 @@ import json
 from math import ceil
 import sys
 from configuration import Configuration
+import datetime
 
 es = Elasticsearch([{'host': Configuration.get_elasticsearch_server(), 'port': 9200}])
 
@@ -13,6 +14,11 @@ def harvest_earthquakes(period):
     """ method to get the earthquakes from usgs """
     url = None
     dict_response = {}
+    st_datetime_now = str(datetime.datetime.utcnow().isoformat())
+    line = st_datetime_now + ' : request => ' + period + '\n'
+    Configuration.write_to_log('-----------------------------------' + '\n')
+    Configuration.write_to_log(line)
+
     if period in ['last_hour', 'last_day','last_week', 'last_month']:
 
         if period == 'last_hour':
@@ -30,6 +36,9 @@ def harvest_earthquakes(period):
             dict_response['features'] = features
             dict_response['result'] = 'success'
             print('successfully retrieved ' + str(len(dict_response['features'])))
+            line='successfully retrieved ' + str(len(dict_response['features'])) + '\n'
+            Configuration.write_to_log(line)
+
             load_data_in_es(dict_response['features'], 'usgs')
 
     elif period in ['2018']:
@@ -45,7 +54,7 @@ def harvest_earthquakes(period):
 
 
 def load_data_in_es(ls_docs, index):
-    print('----- data loading into elasticsearch ----')
+    stResponse=''
     ls_indexes = list_indexes()
     if index in ls_indexes:
         print('the index already exist')
@@ -56,7 +65,7 @@ def load_data_in_es(ls_docs, index):
 
     query_count = {"query": {"match_all": {}}}
     count = es.count(index=index, body=query_count)
-    print('number of features in ' + index + ' :' + str(count['count']))
+    stResponse=stResponse+ 'number of features in ' + index + ' :' + str(count['count']) + '\n'
 
     i = 1
     for d in ls_docs:
@@ -72,8 +81,10 @@ def load_data_in_es(ls_docs, index):
         es.index(index=index, doc_type='quake_summary', id=d['id'], body=d)
 
     count = es.count(index=index, body=query_count)
-    print('after loading data, number of features in ' + index + ' :' + str(count['count']))
-    print('----- ------------------------')
+
+    stResponse=stResponse+'after loading data, number of features in ' + index + ' :' + str(count['count']) + '\n'
+    Configuration.write_to_log(stResponse)
+
 
 def search_quakes(keyword):
     """ search one earthquake by id """
@@ -193,7 +204,7 @@ def harvest_quakes_by_time_period():
 
     dict_response={}
     for url in ls_requests:
-        print(url)
+        Configuration.write_to_log(url + '\n')
         r = requests.get(url)
         response_as_dict = json.loads(r.content)
         load_data_in_es(response_as_dict['features'], 'usgs')
