@@ -164,7 +164,7 @@ def get_counts_per_day(index, keyword):
     result_query = es.search(index=index,body=dict_query)
     return result_query
 
-def harvest_quakes_by_time_period():
+def harvest_quakes_by_time_period(year):
     """
         special operation harvest quakes from specific time periods
         the function harvest_quakes_by_time_period() contains a list of urls for the months from january to november 2018
@@ -172,35 +172,41 @@ def harvest_quakes_by_time_period():
     """
 
     ls_requests=[]
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-01-01 00:00:00&endtime=2018-01-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-01-15 00:00:00&endtime=2018-02-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-01-01 00:00:00&endtime='+str(year)+'-01-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-01-15 00:00:00&endtime='+str(year)+'-02-01 00:00:00&minmagnitude=0&orderby=time')
 
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-02-01 00:00:00&endtime=2018-02-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-02-15 00:00:00&endtime=2018-03-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-02-01 00:00:00&endtime='+str(year)+'-02-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-02-15 00:00:00&endtime='+str(year)+'-03-01 00:00:00&minmagnitude=0&orderby=time')
 
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-03-01 00:00:00&endtime=2018-03-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-03-15 00:00:00&endtime=2018-04-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-03-01 00:00:00&endtime='+str(year)+'-03-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-03-15 00:00:00&endtime='+str(year)+'-04-01 00:00:00&minmagnitude=0&orderby=time')
 
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-04-01 00:00:00&endtime=2018-04-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-04-15 00:00:00&endtime=2018-05-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-04-01 00:00:00&endtime='+str(year)+'-04-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-04-15 00:00:00&endtime='+str(year)+'-05-01 00:00:00&minmagnitude=0&orderby=time')
 
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-05-01 00:00:00&endtime=2018-05-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-05-15 00:00:00&endtime=2018-06-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-05-01 00:00:00&endtime='+str(year)+'-05-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-05-15 00:00:00&endtime='+str(year)+'-06-01 00:00:00&minmagnitude=0&orderby=time')
 
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-06-01 00:00:00&endtime=2018-06-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-06-15 00:00:00&endtime=2018-07-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-06-01 00:00:00&endtime='+str(year)+'-06-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-06-15 00:00:00&endtime='+str(year)+'-07-01 00:00:00&minmagnitude=0&orderby=time')
 
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-07-01 00:00:00&endtime=2018-07-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-07-15 00:00:00&endtime=2018-08-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-07-01 00:00:00&endtime='+str(year)+'-07-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-07-15 00:00:00&endtime='+str(year)+'-08-01 00:00:00&minmagnitude=0&orderby=time')
 
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-08-01 00:00:00&endtime=2018-08-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-08-15 00:00:00&endtime=2018-09-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-08-01 00:00:00&endtime='+str(year)+'-08-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-08-15 00:00:00&endtime='+str(year)+'-09-01 00:00:00&minmagnitude=0&orderby=time')
 
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-09-01 00:00:00&endtime=2018-09-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-09-15 00:00:00&endtime=2018-10-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-09-01 00:00:00&endtime='+str(year)+'-09-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-09-15 00:00:00&endtime='+str(year)+'-10-01 00:00:00&minmagnitude=0&orderby=time')
 
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-10-01 00:00:00&endtime=2018-10-15 00:00:00&minmagnitude=0&orderby=time')
-    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime=2018-10-15 00:00:00&endtime=2018-11-01 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-10-01 00:00:00&endtime='+str(year)+'-10-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-10-15 00:00:00&endtime='+str(year)+'-11-01 00:00:00&minmagnitude=0&orderby=time')
+
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-11-01 00:00:00&endtime='+str(year)+'-11-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-11-15 00:00:00&endtime='+str(year)+'-12-01 00:00:00&minmagnitude=0&orderby=time')
+
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-12-01 00:00:00&endtime='+str(year)+'-12-15 00:00:00&minmagnitude=0&orderby=time')
+    ls_requests.append('https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?starttime='+str(year)+'-12-15 00:00:00&endtime='+str(year)+'-12-31 24:00:00&minmagnitude=0&orderby=time')
 
     dict_response={}
     for url in ls_requests:
